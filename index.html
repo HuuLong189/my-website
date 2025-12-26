@@ -40,5 +40,62 @@
 </div>
 
 <script src="script.js"></script>
+  <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // 🔥 DÁN firebaseConfig CỦA BẠN VÀO ĐÂY
+const firebaseConfig = {
+  apiKey: "AIzaSyCa2JKz2_B2oFqbIrErJPfrYMNCYbyFFlw",
+  authDomain: "long-store-8d819.firebaseapp.com",
+  projectId: "long-store-8d819",
+  storageBucket: "long-store-8d819.firebasestorage.app",
+  messagingSenderId: "225154933198",
+  appId: "1:225154933198:web:ca651fa1868fdb85c6cb9f"
+};
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // ====== AUTH ======
+  window.register = function () {
+    const email = prompt("Nhập email");
+    const password = prompt("Nhập mật khẩu");
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(() => alert("Đăng ký thành công"))
+      .catch(err => alert(err.message));
+  };
+
+  window.login = function () {
+    const email = prompt("Nhập email");
+    const password = prompt("Nhập mật khẩu");
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => alert("Đăng nhập thành công"))
+      .catch(err => alert(err.message));
+  };
+
+  // ====== ORDER ======
+  window.placeOrder = function () {
+    const name = prompt("Tên khách hàng");
+    const phone = prompt("Số điện thoại");
+    const address = prompt("Địa chỉ");
+
+    db.collection("orders").add({
+      name,
+      phone,
+      address,
+      createdAt: new Date()
+    }).then(() => {
+      alert("Đặt hàng thành công");
+    });
+  };
+</script>
+
 </body>
 </html>
+
